@@ -44,3 +44,6 @@ docs/           canonical.md, adr/, api.md (Figma D3에서 이관)
 - 새 테이블·컬럼은 먼저 `supabase/migrations`에, 그 다음 타입 생성, 그 다음 UI.
 - 테스트는 D2 기능명세의 "상태 변화" 열을 그대로 케이스로 쓴다.
 - 커밋 메시지는 한국어, `[C1-a] 옵션 선택 화면 골격` 형식.
+
+## Next.js 주의
+이 레포의 Next.js는 16.x로 학습 데이터와 다를 수 있다. 코드를 쓰기 전에 `AGENTS.md`와 `node_modules/next/dist/docs/`를 먼저 읽는다.
