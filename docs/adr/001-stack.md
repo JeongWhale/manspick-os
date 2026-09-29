@@ -23,4 +23,4 @@
 
 ## 결과
 - Figma D3 API 초안 → `docs/api.md`로 이관 후 Server Actions / Route Handlers로 구현.
-- 고객 URL 예: `https://<os-domain>/c/<access_token>` (도메인 미정).
+- 고객 URL: `https://os.manspick.kr/c/<access_token>`
