@@ -103,7 +103,7 @@ create table retoucher_rules (
 -- ───────────────────────── 고객 (옵션 선택 + 기본정보 입력 시 생성)
 create table customers (
   id uuid primary key default gen_random_uuid(),
-  access_token text not null unique default encode(gen_random_bytes(18), 'base64url'),
+  access_token text not null unique default replace(replace(rtrim(encode(gen_random_bytes(18), 'base64'), '='), '+', '-'), '/', '_'),
   name text not null,
   phone text not null,
   phone_last4 text generated always as (right(regexp_replace(phone, '\D', '', 'g'), 4)) stored,
@@ -312,7 +312,8 @@ begin
 end $$;
 
 -- ───────────────────────── 보정가 마스킹 뷰 (이름·연락처·설문 제외)
-create view retoucher_jobs_masked with (security_invoker = true) as
+-- security_definer(기본): 뷰 소유자 권한으로 customers를 읽되 auth.uid() 필터로 본인 작업만. 보정가는 customers 직접 조회 불가
+create view retoucher_jobs_masked as
 select r.customer_id,
        'MP-' || to_char(b_slot.starts_at, 'MMDD') || '-' || right(r.customer_id::text, 2) as job_code,
        c.package, r.state, r.due_at, r.preferences, r.revision,
